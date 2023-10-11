@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/mattn/go-sqlite3"
+	"github.com/maxbad/go-sqlite3-sqlcipher"
 )
 
 type seriesModule struct{}
