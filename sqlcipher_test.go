@@ -29,7 +29,7 @@ func TestCipher(t *testing.T) {
 	}
 	for _, key := range keys {
 		fname := TempFilename(t)
-		uri := "file:" + fname + "?_key=" + key
+		uri := "file:" + fname + "?_pragma_key=" + key
 		db, err := sql.Open("sqlite3", uri)
 		if err != nil {
 			os.Remove(fname)
@@ -81,10 +81,10 @@ func TestCipher(t *testing.T) {
 			continue
 		}
 
-		db, err = sql.Open("sqlite3", "file:"+fname+"?_key=bogus")
+		db, err = sql.Open("sqlite3", "file:"+fname+"?_pragma_key=bogus")
 		if err != nil {
 			os.Remove(fname)
-			t.Errorf("sql.Open(\"sqlite3\", %q): %v", "file:"+fname+"?_key=bogus", err)
+			t.Errorf("sql.Open(\"sqlite3\", %q): %v", "file:"+fname+"?_pragma_key=bogus", err)
 			continue
 		}
 		_, err = db.Exec("SELECT id FROM test")
@@ -136,7 +136,7 @@ func TestCipherCompatibility(t *testing.T) {
 	for i := 1; i < major; i++ {
 		fname := TempFilename(t)
 
-		uriNoCompat := fmt.Sprintf("file:%s?_key=passphrase", fname)
+		uriNoCompat := fmt.Sprintf("file:%s?_pragma_key=passphrase", fname)
 		uriCompat := fmt.Sprintf("%s&_cipher_compatibility=%d", uriNoCompat, i)
 		uriMigrate := fmt.Sprintf("%s&_cipher_migrate", uriNoCompat)
 

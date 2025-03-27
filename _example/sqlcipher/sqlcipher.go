@@ -3,9 +3,10 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	_ "github.com/maxbad/go-sqlite3-sqlcipher"
 	"log"
 	"os"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
@@ -17,7 +18,7 @@ func main() {
 	fmt.Println("当前目录为:", dir)
 	os.Remove("./foo.db")
 	// 编译时,加上 -tags "sqlcipher"
-	db, err := sql.Open("sqlite3", "./foo.db?_key=123123")
+	db, err := sql.Open("sqlite3", "./foo.db?_pragma_key=123123")
 	if err != nil {
 		log.Fatal(err)
 	}
