@@ -1,5 +1,5 @@
-//go:build tomcrypt
-// +build tomcrypt
+//go:build !tomcrypt
+// +build !tomcrypt
 
 package sqlite3
 
